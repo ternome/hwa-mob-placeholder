@@ -358,6 +358,9 @@ img {
   font-size: 14px;
   line-height: 1.4;
 }
+.share-status:empty {
+  display: none; /* reserve no vertical space (or gap) when there's no message */
+}
 .share-status[data-state="success"] {
   color: var(--c-accent);
 }
