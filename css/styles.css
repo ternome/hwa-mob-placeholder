@@ -9,8 +9,9 @@
   --c-accent: #e4ff4c; /* Colors/yellow — benefit icons */
   --c-support: rgba(255, 255, 255, 0.6);
 
-  /* Recolor the (blue) offerhub glow sprites to gold: sepia → saturate → hue. */
-  --gold-tint: sepia(1) saturate(3.4) hue-rotate(6deg) brightness(1.35);
+  /* Recolor the (blue) offerhub glow sprites to purple to match the laptop art:
+     rotate the blue hue toward violet, then boost saturation/brightness. */
+  --glow-tint: hue-rotate(48deg) saturate(1.7) brightness(1.2);
 
   /* CTA (Figma lb_button nine-patch) */
   --cta-fill: #389200;
@@ -123,7 +124,7 @@ img {
   width: 100%;
   max-width: 382px;
   height: auto;
-  aspect-ratio: 1506 / 979; /* reserve space → no layout shift */
+  aspect-ratio: 1644 / 997; /* reserve space → no layout shift */
   max-height: var(--laptop-max-h);
   object-fit: contain; /* never stretch/crop (PLAN §5) */
 }
@@ -139,7 +140,7 @@ img {
   aspect-ratio: 1 / 1;
   pointer-events: none;
   mix-blend-mode: screen; /* additive light against the dark bg */
-  filter: var(--gold-tint);
+  filter: var(--glow-tint);
 }
 .hero__glow--circle {
   width: clamp(360px, 118%, 540px);
@@ -170,13 +171,13 @@ img {
 .hero__rays {
   width: clamp(300px, 100%, 440px);
   opacity: 0.32;
-  filter: blur(2px) var(--gold-tint);
+  filter: blur(2px) var(--glow-tint);
   animation: hero-rays 22s linear infinite;
 }
 .hero__spot {
   width: clamp(220px, 72%, 340px);
   opacity: 0.8;
-  filter: var(--gold-tint);
+  filter: var(--glow-tint);
   animation: hero-spot 3.4s ease-in-out infinite;
 }
 .hero__spark {
@@ -188,7 +189,7 @@ img {
   margin: -11px 0 0 -11px;
   background: url("../assets/fx-spark-blue.webp") center / contain no-repeat;
   mix-blend-mode: screen;
-  filter: brightness(1.4) var(--gold-tint);
+  filter: brightness(1.4) var(--glow-tint);
   opacity: 0;
   will-change: transform, opacity;
   animation: hero-spark 4.5s ease-in-out infinite;
