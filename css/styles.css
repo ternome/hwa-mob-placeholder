@@ -16,9 +16,13 @@
   --cta-inner-bottom: #50b900;
   --cta-inner-top: rgba(88, 196, 0, 0.7);
 
-  /* Fonts */
-  --font-head: "Roboto Condensed", system-ui, sans-serif;
-  --font-body: "Inter", system-ui, -apple-system, sans-serif;
+  /* Fonts. Apple devices use the native San Francisco (SF Pro Text) — no
+     webfont download; other platforms fall back to the loaded Roboto
+     Condensed (headline/benefits) / Inter (CTA/support). */
+  --font-head: "SF Pro Text", -apple-system, BlinkMacSystemFont,
+    "Roboto Condensed", system-ui, sans-serif;
+  --font-body: "SF Pro Text", -apple-system, BlinkMacSystemFont, "Inter",
+    system-ui, sans-serif;
 
   /* Spacing (Figma: column gap 42, copy gap 24, benefit gap 12, pad 24).
      Vertical units use svh (small viewport) so content fits with the browser
@@ -61,11 +65,11 @@ body {
 body {
   /* No min-height: page height is content-driven so it never exceeds the
      visible viewport (kills the residual svh-rounding scroll on iOS Chromium).
-     The fixed .bg below covers the viewport regardless of content height. */
+     The solid background propagates to the canvas, covering the whole viewport
+     regardless of content height. */
   font-family: var(--font-body);
   color: var(--c-text);
-  /* Gradient fallback behind the raster background. */
-  background: #161617 linear-gradient(168deg, #182a8c 0%, #2b2f9e 48%, #5b2fa0 100%);
+  background: #161616;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -73,15 +77,6 @@ body {
 img {
   max-width: 100%;
   display: block;
-}
-
-/* ------------------------------------------------------------ background */
-.bg {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  background: url("../assets/bg.webp") center / cover no-repeat;
-  pointer-events: none;
 }
 
 /* --------------------------------------------------------------- layout */
