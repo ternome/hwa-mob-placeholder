@@ -67,7 +67,7 @@
       ]
     },
     {
-      "source": "/(index(\\.[a-z-]+)?\\.html)?",
+      "source": "/index(\\.[a-z-]+)?\\.html",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
       ]
