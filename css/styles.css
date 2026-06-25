@@ -432,6 +432,22 @@ img {
     align-items: flex-start; /* icon + label flush left */
   }
 
+  /* Tighter type for the side-by-side layout (overrides the fluid clamps). */
+  .headline {
+    font-size: 24px;
+  }
+  .benefit {
+    font-size: 14px;
+  }
+  .benefit__icon {
+    /* Smaller than the 1.2em default so the icon matches the 14px label. */
+    width: 1em;
+    height: 1em;
+  }
+  .support {
+    font-size: 14px;
+  }
+
   /* CTA fills the right column instead of the narrow centered pill. */
   .action {
     align-items: stretch;
