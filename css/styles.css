@@ -319,7 +319,7 @@ img {
   }
 }
 .cta:active {
-  transform: translateY(1px);
+  transform: scale(0.96);
 }
 
 .cta__label {

@@ -4,8 +4,11 @@
 /** Base desktop URL the shared link points to. Infra serves WebGL here on desktop. */
 export const DESKTOP_BASE_URL = 'https://hero-wars-alliance.com/';
 
-/** Static acquisition-flow marker added to every shared URL. */
+/** Acquisition-flow marker value, sent as the `hwa-source` query param. */
 export const SOURCE = 'mobile_landing';
+
+/** Query-param key for the acquisition marker (e.g. `?hwa-source=mobile_landing`). */
+export const SOURCE_PARAM = 'hwa-source';
 
 /**
  * Incoming query params that are safe to forward into the shared URL.
@@ -19,9 +22,6 @@ export const FORWARD_PARAM_ALLOWLIST = [
   'utm_content',
   'utm_term',
 ];
-
-/** sessionStorage key under which the per-session opaque share_id is persisted. */
-export const SHARE_ID_STORAGE_KEY = 'hwa_share_id';
 
 /** Native share-sheet payload. The URL is the required part; some apps ignore title/text. */
 export const SHARE_TITLE = 'Hero Wars Alliance';

@@ -1,59 +1,17 @@
 import {
   DESKTOP_BASE_URL,
   SOURCE,
+  SOURCE_PARAM,
   FORWARD_PARAM_ALLOWLIST,
-  SHARE_ID_STORAGE_KEY,
 } from './config.js';
-
-/**
- * Get (or lazily create) the opaque per-session share_id.
- * Generated once and reused for every share attempt from the same page session.
- */
-export function getShareId() {
-  let id = null;
-  try {
-    id = sessionStorage.getItem(SHARE_ID_STORAGE_KEY);
-  } catch (_) {
-    // sessionStorage may be blocked (private mode / in-app browser).
-  }
-  if (!id) {
-    id = generateOpaqueId();
-    try {
-      sessionStorage.setItem(SHARE_ID_STORAGE_KEY, id);
-    } catch (_) {
-      /* keep the in-memory id for this session */
-    }
-  }
-  return id;
-}
-
-/** Cryptographically strong, opaque, non-PII identifier. */
-function generateOpaqueId() {
-  if (window.crypto && typeof window.crypto.randomUUID === 'function') {
-    return window.crypto.randomUUID();
-  }
-  // RFC4122 v4 from getRandomValues (older browsers without randomUUID).
-  if (window.crypto && window.crypto.getRandomValues) {
-    const b = new Uint8Array(16);
-    window.crypto.getRandomValues(b);
-    b[6] = (b[6] & 0x0f) | 0x40;
-    b[8] = (b[8] & 0x3f) | 0x80;
-    const h = [...b].map((x) => x.toString(16).padStart(2, '0'));
-    return `${h.slice(0, 4).join('')}-${h.slice(4, 6).join('')}-${h
-      .slice(6, 8)
-      .join('')}-${h.slice(8, 10).join('')}-${h.slice(10, 16).join('')}`;
-  }
-  // Should never reach here on supported browsers.
-  throw new Error('No cryptographically strong random source available');
-}
 
 /**
  * Build the desktop URL to share:
  *   - start from DESKTOP_BASE_URL
  *   - forward ONLY allowlisted incoming params
- *   - always set/overwrite source + share_id
+ *   - always set/overwrite the acquisition marker (?hwa-source=mobile_landing)
  */
-export function buildDesktopUrl(shareId, incomingSearch = window.location.search) {
+export function buildDesktopUrl(incomingSearch = window.location.search) {
   const incoming = new URLSearchParams(incomingSearch);
   const url = new URL(DESKTOP_BASE_URL);
 
@@ -64,9 +22,8 @@ export function buildDesktopUrl(shareId, incomingSearch = window.location.search
     }
   }
 
-  // Always added/overwritten last so they cannot be spoofed by incoming params.
-  url.searchParams.set('source', SOURCE);
-  url.searchParams.set('share_id', shareId);
+  // Added/overwritten last so it cannot be spoofed by an incoming param.
+  url.searchParams.set(SOURCE_PARAM, SOURCE);
 
   return url.toString();
 }

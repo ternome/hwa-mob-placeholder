@@ -2,7 +2,6 @@ import { COPY, SHARE_TITLE, SHARE_TEXT, SOURCE } from './config.js';
 import { EVENTS, track } from './analytics.js';
 import { deviceOs, browserName } from './env.js';
 import {
-  getShareId,
   buildDesktopUrl,
   canNativeShare,
   nativeShare,
@@ -10,7 +9,6 @@ import {
   isAbortError,
 } from './share.js';
 
-const shareId = getShareId();
 let shareAttempt = 0;
 
 const ctaButton = document.querySelector('#cta');
@@ -34,7 +32,6 @@ function collectUtm() {
 
 // --- 1. Landing view (fires once per page load) -----------------------------
 track(EVENTS.LANDING_VIEW, {
-  share_id: shareId,
   source: SOURCE,
   device_os: deviceOs(),
   browser: browserName(),
@@ -49,11 +46,10 @@ ctaButton?.addEventListener('click', onShareTap);
 
 async function onShareTap() {
   shareAttempt += 1;
-  const url = buildDesktopUrl(shareId);
+  const url = buildDesktopUrl();
   const supported = canNativeShare(url);
 
   track(EVENTS.SHARE_TAP, {
-    share_id: shareId,
     source: SOURCE,
     share_attempt_number: shareAttempt,
     web_share_supported: supported,
@@ -68,7 +64,6 @@ async function onShareTap() {
     await nativeShare({ title: SHARE_TITLE, text: SHARE_TEXT, url });
     // Resolved is only a WEAK proxy — it does not prove the link was sent.
     track(EVENTS.SHARE_RESOLVED, {
-      share_id: shareId,
       source: SOURCE,
       share_attempt_number: shareAttempt,
     });
@@ -76,7 +71,6 @@ async function onShareTap() {
     if (isAbortError(err)) {
       // User cancelled — no error UI, allow another tap.
       track(EVENTS.SHARE_CANCELLED, {
-        share_id: shareId,
         source: SOURCE,
         share_attempt_number: shareAttempt,
         error_name: err.name || 'AbortError',
@@ -84,7 +78,6 @@ async function onShareTap() {
       return;
     }
     track(EVENTS.SHARE_FAILED, {
-      share_id: shareId,
       source: SOURCE,
       share_attempt_number: shareAttempt,
       error_name: (err && err.name) || 'Error',
@@ -97,7 +90,6 @@ async function fallbackCopy(url, reason) {
   const ok = await copyToClipboard(url);
   if (ok) {
     track(EVENTS.LINK_COPIED, {
-      share_id: shareId,
       source: SOURCE,
       share_attempt_number: shareAttempt,
       fallback_reason: reason,

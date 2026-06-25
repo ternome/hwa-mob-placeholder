@@ -26,7 +26,7 @@ js/
   config.js       # constants, allowlist, approved copy
   analytics.js    # track() abstraction + EVENTS (stub sink: window.dataLayer)
   env.js          # device_os / browser labels (analytics only — never routing)
-  share.js        # share_id, URL construction, Web Share, clipboard fallback
+  share.js        # URL construction (hwa-source + UTM allowlist), Web Share, clipboard fallback
   main.js         # wiring: view event, tap handler, fallback feedback
 assets/           # bg.webp, laptop.webp (device+map+logo), icon-share.svg — from Figma
 ```
@@ -46,8 +46,10 @@ assets/           # bg.webp, laptop.webp (device+map+logo), icon-share.svg — f
 ## Out of scope here (live elsewhere)
 
 - Device routing / serving WebGL to desktop.
-- `mobile_desktop_link_opened` and downstream events — fire on the **desktop**
-  side when the shared URL is opened; they reuse the same `share_id`.
+- `mobile_desktop_link_opened` and downstream events fire on the **desktop**
+  side when the shared URL is opened. (The opaque `share_id` correlation param
+  was dropped for now — the shared URL carries only `hwa-source=mobile_landing`
+  plus allowlisted UTMs.)
 - Analytics SDK — `track()` currently pushes to `window.dataLayer`; swap the
   `emit()` body in `js/analytics.js` for the real SDK.
 
