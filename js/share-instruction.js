@@ -22,15 +22,34 @@ const banner = document.querySelector('[data-share-instruction]');
 const closeButton = document.querySelector('[data-share-instruction-close]');
 
 let timerId = null; // 20s safety timeout
+let pendingShowId = null; // delayed-show timer
 let visible = false;
 let shownAt = 0;
 let currentAttempt = 0;
 
 /**
  * Show the banner. Idempotent within a display session: a second call while
- * already visible does nothing (no duplicate timer or analytics event).
+ * already visible (or already pending) does nothing.
+ *
+ * With `delayMs > 0` the appearance is deferred — the banner pops in that many
+ * ms after the share flow starts. If the share settles first, hideShareInstruction
+ * cancels the pending show so the banner never flashes in late.
  */
-export function showShareInstruction(trigger, attemptNumber) {
+export function showShareInstruction(trigger, attemptNumber, delayMs = 0) {
+  if (!banner || visible || pendingShowId !== null) return;
+
+  if (delayMs > 0) {
+    pendingShowId = window.setTimeout(() => {
+      pendingShowId = null;
+      presentBanner(trigger, attemptNumber);
+    }, delayMs);
+    return;
+  }
+
+  presentBanner(trigger, attemptNumber);
+}
+
+function presentBanner(trigger, attemptNumber) {
   if (!banner || visible) return;
 
   visible = true;
@@ -56,8 +75,14 @@ export function showShareInstruction(trigger, attemptNumber) {
 /**
  * Hide the banner. Idempotent: only the first call per display session emits the
  * hidden event, so the share-flow `finally` can call it without double-counting.
+ * Also cancels a still-pending delayed show (share settled before it appeared) —
+ * in that case the banner never showed, so no shown/hidden events fire.
  */
 export function hideShareInstruction(reason) {
+  if (pendingShowId !== null) {
+    window.clearTimeout(pendingShowId);
+    pendingShowId = null;
+  }
   if (!banner || !visible) return;
 
   window.clearTimeout(timerId);
@@ -91,9 +116,11 @@ closeButton?.addEventListener('click', (event) => {
   hideShareInstruction('user_close_tap');
 });
 
-// Page being destroyed: clear the timer, but stay quiet — no noisy analytics on
+// Page being destroyed: clear timers, but stay quiet — no noisy analytics on
 // teardown (PLAN §16).
 window.addEventListener('pagehide', () => {
   window.clearTimeout(timerId);
+  window.clearTimeout(pendingShowId);
   timerId = null;
+  pendingShowId = null;
 });

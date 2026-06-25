@@ -78,7 +78,10 @@ async function onShareTap() {
   shareInProgress = true;
   const sharePromise = nativeShare({ title: SHARE_TITLE, text: SHARE_TEXT, url });
 
-  showShareInstruction('click', shareAttempt);
+  // Show the banner 1s into the share flow (not before share() — see above). If
+  // the share settles within that second, the pending show is cancelled so the
+  // banner doesn't flash in after the sheet has already closed.
+  showShareInstruction('click', shareAttempt, 1000);
   track(EVENTS.SHARE_TAP, {
     source: SOURCE,
     share_attempt_number: shareAttempt,
