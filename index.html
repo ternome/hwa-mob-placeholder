@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>Play Hero Wars Alliance on Your Computer</title>
+    <meta
+      name="description"
+      content="Send yourself a link and continue playing Hero Wars Alliance on a bigger screen. No download needed."
+    />
+    <!-- Device-specific entry state — keep the canonical product URL (PLAN §12). -->
+    <link rel="canonical" href="https://hero-wars-alliance.com/" />
+
+    <!-- Fonts: Roboto Condensed (headline + benefits) and Inter (CTA + support). -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Roboto+Condensed:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="preload" as="image" href="assets/laptop.webp" />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <!-- Decorative blue→purple geometric background (raster from Figma). -->
+    <div class="bg" aria-hidden="true"></div>
+
+    <main class="landing">
+      <!-- 1. Laptop visual (composite: device + map + logo, baked in Figma). -->
+      <img
+        class="laptop"
+        src="assets/laptop.webp"
+        alt="Hero Wars Alliance running on a laptop"
+        width="820"
+        height="533"
+        fetchpriority="high"
+      />
+
+      <!-- 2 + 3. Headline and benefits. -->
+      <div class="copy">
+        <h1 class="headline">Play on Your Computer</h1>
+        <ul class="benefits">
+          <li class="benefit">
+            <span class="benefit__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m9 10 2 2 4-4" />
+                <rect x="2" y="3" width="20" height="14" rx="2" />
+                <path d="M12 17v4" />
+                <path d="M8 21h8" />
+              </svg>
+            </span>
+            <span class="benefit__text">Bigger screen</span>
+          </li>
+          <li class="benefit">
+            <span class="benefit__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
+                <polyline points="16 7 22 7 22 13" />
+              </svg>
+            </span>
+            <span class="benefit__text">Keep your progress</span>
+          </li>
+          <li class="benefit">
+            <span class="benefit__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10" />
+                <path d="M2 12h20" />
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+              </svg>
+            </span>
+            <span class="benefit__text">No download needed</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- 4 + 5. CTA and supporting text. -->
+      <div class="action">
+        <button id="cta" class="cta" type="button">
+          <span class="cta__icon" aria-hidden="true">
+            <svg viewBox="0 0 17.334 23.934" fill="white" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6.05469 7.82227H4.08203C2.48048 7.82227 1.57228 8.73045 1.57227 10.332V17.8516C1.57227 19.4629 2.48047 20.3613 4.08203 20.3613H13.2422C14.8535 20.3613 15.7617 19.4629 15.7617 17.8516V10.332C15.7617 8.73045 14.8535 7.82227 13.2422 7.82227H11.2695V6.25H13.2422C15.8691 6.25 17.334 7.71483 17.334 10.332V17.8516C17.334 20.4786 15.8691 21.9336 13.2422 21.9336H4.08203C1.45508 21.9336 7.04327e-07 20.4786 0 17.8516V10.332C1.07809e-05 7.71483 1.45509 6.25 4.08203 6.25H6.05469V7.82227ZM8.66211 0C8.86719 2.72461e-07 9.0332 0.0585967 9.22852 0.253906L12.4512 3.35938C12.5977 3.50586 12.6758 3.66211 12.6758 3.87695C12.6758 4.27734 12.373 4.56055 11.9629 4.56055C11.7773 4.56054 11.5723 4.4824 11.4355 4.32617L9.93164 2.71484L9.37695 2.13086L9.44336 3.60352V13.5352C9.44336 13.9454 9.08203 14.2871 8.66211 14.2871C8.24219 14.2871 7.89062 13.9454 7.89062 13.5352V3.60352L7.95605 2.12598L7.40234 2.71484L5.88867 4.32617C5.75195 4.48242 5.53711 4.56055 5.35156 4.56055C4.94141 4.56055 4.64844 4.27734 4.64844 3.87695C4.64844 3.66211 4.73633 3.50586 4.88281 3.35938L8.0957 0.253906C8.30078 0.0585963 8.4668 0 8.66211 0Z" />
+            </svg>
+          </span>
+          <span class="cta__label">Send Link to Myself</span>
+        </button>
+        <p class="support">
+          Choose WhatsApp, Mail, or another app, then open the link on your
+          computer.
+        </p>
+      </div>
+
+      <!-- Live region for fallback / error feedback -->
+      <p id="share-status" class="share-status" role="status" aria-live="polite"></p>
+    </main>
+
+    <script type="module" src="js/main.js"></script>
+  </body>
+</html>

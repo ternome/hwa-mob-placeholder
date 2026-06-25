@@ -1,0 +1,268 @@
+/* Hero Wars Alliance — mobile placeholder landing.
+   Values taken from Figma node 6483:9883 (frame 430×932), translated to a
+   responsive layout per PLAN §6. */
+
+/* ----------------------------------------------------------------- tokens */
+:root {
+  /* Colors (Figma variables) */
+  --c-text: #ffffff;
+  --c-accent: #e4ff4c; /* Colors/yellow — benefit icons */
+  --c-support: rgba(255, 255, 255, 0.6);
+
+  /* CTA (Figma lb_button nine-patch) */
+  --cta-fill: #389200;
+  --cta-border: #b9dc54;
+  --cta-frame: #668600;
+  --cta-inner-bottom: #50b900;
+  --cta-inner-top: rgba(88, 196, 0, 0.7);
+
+  /* Fonts */
+  --font-head: "Roboto Condensed", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, -apple-system, sans-serif;
+
+  /* Spacing (Figma: column gap 42, copy gap 24, benefit gap 12, pad 24) */
+  --pad-x: 24px;
+  --gap-section: clamp(20px, 5vh, 42px);
+  --gap-copy: clamp(16px, 3vh, 24px);
+  --gap-benefit: 12px;
+  --pad-top: clamp(20px, 6vh, 51px);
+
+  /* Fluid type/sizes */
+  --headline-size: clamp(34px, 11.4vw, 48px);
+  --benefit-size: clamp(17px, 5.2vw, 20px);
+  --cta-h: clamp(62px, 11vh, 84px);
+  --cta-label: clamp(18px, 5vw, 20px);
+  --support-size: 16px;
+  --laptop-max-h: clamp(150px, 30vh, 300px);
+}
+
+/* ----------------------------------------------------------------- reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+body {
+  min-height: 100dvh;
+  font-family: var(--font-body);
+  color: var(--c-text);
+  /* Gradient fallback behind the raster background. */
+  background: #161617 linear-gradient(168deg, #182a8c 0%, #2b2f9e 48%, #5b2fa0 100%);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* ------------------------------------------------------------ background */
+.bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background: url("../assets/bg.webp") center / cover no-repeat;
+  pointer-events: none;
+}
+
+/* --------------------------------------------------------------- layout */
+.landing {
+  position: relative;
+  z-index: 1;
+  min-height: 100dvh;
+  max-width: 430px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--gap-section);
+  padding: calc(var(--pad-top) + env(safe-area-inset-top)) var(--pad-x)
+    calc(var(--gap-section) + env(safe-area-inset-bottom));
+  padding-left: max(var(--pad-x), env(safe-area-inset-left));
+  padding-right: max(var(--pad-x), env(safe-area-inset-right));
+}
+
+/* ---------------------------------------------------------- laptop visual */
+.laptop {
+  width: 100%;
+  max-width: 382px;
+  height: auto;
+  aspect-ratio: 1506 / 979; /* reserve space → no layout shift */
+  max-height: var(--laptop-max-h);
+  object-fit: contain; /* never stretch/crop (PLAN §5) */
+}
+
+/* ----------------------------------------------------------- copy block */
+.copy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-copy);
+  width: 100%;
+}
+
+.headline {
+  margin: 0;
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: var(--headline-size);
+  line-height: 1;
+  color: var(--c-text);
+}
+
+/* -------------------------------------------------------------- benefits */
+.benefits {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--gap-benefit);
+}
+
+.benefit {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-head);
+  font-weight: 400;
+  font-size: var(--benefit-size);
+  line-height: 1.2;
+  letter-spacing: 0.2px;
+}
+
+.benefit__icon {
+  flex: 0 0 auto;
+  width: 1.2em;
+  height: 1.2em;
+  color: var(--c-accent);
+}
+.benefit__icon svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* ----------------------------------------------------------- action block */
+.action {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 13px;
+  width: 100%;
+  max-width: 350px;
+}
+
+/* CTA — reproduces the Figma lb_button nine-patch. */
+.cta {
+  width: 100%;
+  min-height: var(--cta-h);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 32px;
+  border: 1px solid var(--cta-border);
+  border-radius: 16px;
+  background: var(--cta-fill);
+  color: var(--c-text);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: var(--cta-label);
+  cursor: pointer;
+  box-shadow: inset 0 4px 0 0 var(--cta-inner-top),
+    inset 0 -4px 4px 0 var(--cta-inner-bottom), 0 0 0 4px var(--cta-frame),
+    0 1px 3px 0 rgba(0, 0, 0, 0.2);
+  transition: transform 0.08s ease, filter 0.12s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.cta:hover {
+  filter: brightness(1.05);
+}
+.cta:active {
+  transform: translateY(1px);
+}
+
+.cta__label {
+  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.3);
+  line-height: 1;
+}
+
+.cta__icon {
+  flex: 0 0 auto;
+  width: 18px;
+  height: 26px;
+  display: inline-flex;
+  filter: drop-shadow(0 2px 0 rgba(0, 0, 0, 0.3));
+}
+.cta__icon svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* ------------------------------------------------------- supporting text */
+.support {
+  margin: 0;
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: var(--support-size);
+  line-height: 1.2;
+  color: var(--c-support);
+}
+
+/* --------------------------------------------------------- share status */
+.share-status {
+  margin: 0;
+  min-height: 1.2em;
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.4;
+}
+.share-status[data-state="success"] {
+  color: var(--c-accent);
+}
+.share-status[data-state="error"] {
+  color: #ff9a8a;
+}
+
+/* ----------------------------------------------------- focus visibility */
+:focus-visible {
+  outline: 3px solid #ffffff;
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* ------------------------------------------------------ short viewports */
+@media (max-height: 700px) {
+  :root {
+    --laptop-max-h: clamp(130px, 24vh, 220px);
+    --gap-section: clamp(14px, 3vh, 26px);
+  }
+}
+@media (max-height: 620px) {
+  :root {
+    --laptop-max-h: clamp(110px, 20vh, 180px);
+    --headline-size: clamp(30px, 9vw, 42px);
+    --gap-copy: 12px;
+  }
+  /* Supporting text may fall below the fold; the CTA must stay visible. */
+}
+
+/* ---------------------------------------------------- reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+}

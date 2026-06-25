@@ -1,0 +1,6 @@
+# OS
+.DS_Store
+
+# Local preview helpers (sandbox/iCloud workaround — not needed for deploy)
+.claude/
+serve.py
