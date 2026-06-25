@@ -8,6 +8,9 @@ export const EVENTS = {
   SHARE_CANCELLED: 'mobile_desktop_share_cancelled',
   SHARE_FAILED: 'mobile_desktop_share_failed',
   LINK_COPIED: 'mobile_desktop_link_copied',
+  // Share instruction banner ("fake push") visibility (PLAN §12).
+  SHARE_INSTRUCTION_SHOWN: 'mobile_desktop_share_instruction_shown',
+  SHARE_INSTRUCTION_HIDDEN: 'mobile_desktop_share_instruction_hidden',
   // mobile_desktop_link_opened + downstream (login_completed / game_started /
   // purchase) fire on the DESKTOP side when the shared URL is opened. They are
   // out of scope for this page but share the same `share_id` correlation key.
