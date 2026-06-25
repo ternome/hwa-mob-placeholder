@@ -1,0 +1,22 @@
+{
+  "banner_close_aria": "Dismiss sharing instructions",
+  "banner_subtitle": "Choose WhatsApp, Mail, or another app",
+  "banner_title": "Send the link to yourself",
+  "benefit_nodownload": "No download needed",
+  "benefit_progress": "Keep your progress",
+  "benefit_screen": "Bigger screen",
+  "copy_error": "Couldn’t share the link. Please copy it and send it to yourself.",
+  "copy_fallback_success": "Link copied. Send it to yourself and open it on your computer.",
+  "cta_label": "Get the Link",
+  "hero_title": "Play on Your Computer",
+  "img_alt": "Hero Wars Alliance running on a laptop",
+  "lang": "en",
+  "meta_description": "Send yourself a link and continue playing Hero Wars Alliance on a bigger screen. No download needed.",
+  "og_description": "Send yourself a link and keep playing on a bigger screen — no download needed.",
+  "og_locale": "en_US",
+  "og_title": "Play Hero Wars Alliance on Your Computer",
+  "page_title": "Play Hero Wars Alliance on Your Computer",
+  "share_text": "Play Hero Wars Alliance on your computer — no download required.",
+  "share_title": "Hero Wars Alliance",
+  "support_text": "Choose WhatsApp, Mail, or another app, then open the link on your computer."
+}

@@ -1,0 +1,22 @@
+{
+  "banner_close_aria": "안내 닫기",
+  "banner_subtitle": "WhatsApp, 메일 등 앱을 선택하세요",
+  "banner_title": "나에게 링크 보내기",
+  "benefit_nodownload": "다운로드 필요 없음",
+  "benefit_progress": "진행 상황 유지",
+  "benefit_screen": "더 큰 화면",
+  "copy_error": "링크를 공유하지 못했습니다. 복사해서 나에게 보내세요.",
+  "copy_fallback_success": "링크를 복사했습니다. 나에게 보내 컴퓨터에서 열세요.",
+  "cta_label": "링크 받기",
+  "hero_title": "컴퓨터에서 플레이",
+  "img_alt": "노트북에서 실행 중인 Hero Wars Alliance",
+  "lang": "ko",
+  "meta_description": "링크를 나에게 보내고 더 큰 화면에서 Hero Wars Alliance를 계속 플레이하세요. 다운로드 필요 없음.",
+  "og_description": "링크를 나에게 보내고 더 큰 화면에서 계속 플레이하세요 — 다운로드 필요 없음.",
+  "og_locale": "ko_KR",
+  "og_title": "컴퓨터에서 Hero Wars Alliance 플레이",
+  "page_title": "컴퓨터에서 Hero Wars Alliance 플레이",
+  "share_text": "컴퓨터에서 Hero Wars Alliance를 플레이하세요 — 다운로드 필요 없음.",
+  "share_title": "Hero Wars Alliance",
+  "support_text": "WhatsApp, 메일 등 앱을 선택한 뒤 컴퓨터에서 링크를 열세요."
+}

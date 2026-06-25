@@ -1,0 +1,26 @@
+{
+  "$comment": "Validated by build.py at every build. All locales must have exactly these keys.",
+  "required_keys": [
+    "banner_close_aria",
+    "banner_subtitle",
+    "banner_title",
+    "benefit_nodownload",
+    "benefit_progress",
+    "benefit_screen",
+    "copy_error",
+    "copy_fallback_success",
+    "cta_label",
+    "hero_title",
+    "img_alt",
+    "lang",
+    "meta_description",
+    "og_description",
+    "og_locale",
+    "og_title",
+    "page_title",
+    "share_text",
+    "share_title",
+    "support_text"
+  ],
+  "expected_count": 20
+}

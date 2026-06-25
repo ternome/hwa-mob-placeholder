@@ -1,0 +1,22 @@
+{
+  "banner_close_aria": "案内を閉じる",
+  "banner_subtitle": "WhatsApp、メールなどのアプリを選択",
+  "banner_title": "自分にリンクを送信",
+  "benefit_nodownload": "ダウンロード不要",
+  "benefit_progress": "進行状況はそのまま",
+  "benefit_screen": "大きな画面",
+  "copy_error": "リンクを共有できませんでした。コピーして自分に送ってください。",
+  "copy_fallback_success": "リンクをコピーしました。自分に送ってパソコンで開いてください。",
+  "cta_label": "リンクを取得",
+  "hero_title": "パソコンでプレイ",
+  "img_alt": "ノートパソコンで動く Hero Wars Alliance",
+  "lang": "ja",
+  "meta_description": "自分にリンクを送って、大きな画面で Hero Wars Alliance を続けよう。ダウンロード不要。",
+  "og_description": "自分にリンクを送って、大きな画面で続けよう。ダウンロード不要。",
+  "og_locale": "ja_JP",
+  "og_title": "Hero Wars Alliance をパソコンでプレイ",
+  "page_title": "Hero Wars Alliance をパソコンでプレイ",
+  "share_text": "Hero Wars Alliance をパソコンでプレイ — ダウンロード不要。",
+  "share_title": "Hero Wars Alliance",
+  "support_text": "WhatsApp やメールなどのアプリを選び、パソコンでリンクを開いてください。"
+}

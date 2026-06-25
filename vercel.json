@@ -1,0 +1,82 @@
+{
+  "buildCommand": "python3 build.py",
+  "outputDirectory": ".",
+  "rewrites": [
+    {
+      "source": "/",
+      "has": [{ "type": "header", "key": "accept-language", "value": "(^|,\\s*)zh-(TW|HK|MO|Hant)" }],
+      "destination": "/index.zh-hant.html"
+    },
+    {
+      "source": "/",
+      "has": [{ "type": "header", "key": "accept-language", "value": "(^|,\\s*)zh" }],
+      "destination": "/index.zh-hans.html"
+    },
+    {
+      "source": "/",
+      "has": [{ "type": "header", "key": "accept-language", "value": "(^|,\\s*)ru(-|;|,|\\s|$)" }],
+      "destination": "/index.ru.html"
+    },
+    {
+      "source": "/",
+      "has": [{ "type": "header", "key": "accept-language", "value": "(^|,\\s*)de(-|;|,|\\s|$)" }],
+      "destination": "/index.de.html"
+    },
+    {
+      "source": "/",
+      "has": [{ "type": "header", "key": "accept-language", "value": "(^|,\\s*)fr(-|;|,|\\s|$)" }],
+      "destination": "/index.fr.html"
+    },
+    {
+      "source": "/",
+      "has": [{ "type": "header", "key": "accept-language", "value": "(^|,\\s*)es(-|;|,|\\s|$)" }],
+      "destination": "/index.es.html"
+    },
+    {
+      "source": "/",
+      "has": [{ "type": "header", "key": "accept-language", "value": "(^|,\\s*)pt(-|;|,|\\s|$)" }],
+      "destination": "/index.pt.html"
+    },
+    {
+      "source": "/",
+      "has": [{ "type": "header", "key": "accept-language", "value": "(^|,\\s*)it(-|;|,|\\s|$)" }],
+      "destination": "/index.it.html"
+    },
+    {
+      "source": "/",
+      "has": [{ "type": "header", "key": "accept-language", "value": "(^|,\\s*)pl(-|;|,|\\s|$)" }],
+      "destination": "/index.pl.html"
+    },
+    {
+      "source": "/",
+      "has": [{ "type": "header", "key": "accept-language", "value": "(^|,\\s*)ja(-|;|,|\\s|$)" }],
+      "destination": "/index.ja.html"
+    },
+    {
+      "source": "/",
+      "has": [{ "type": "header", "key": "accept-language", "value": "(^|,\\s*)ko(-|;|,|\\s|$)" }],
+      "destination": "/index.ko.html"
+    },
+    { "source": "/", "destination": "/index.html" }
+  ],
+  "headers": [
+    {
+      "source": "/assets/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    },
+    {
+      "source": "/(index(\\.[a-z-]+)?\\.html)?",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
+      ]
+    },
+    {
+      "source": "/(robots\\.txt|sitemap\\.xml)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=3600" }
+      ]
+    }
+  ]
+}
