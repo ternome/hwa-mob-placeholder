@@ -25,23 +25,23 @@
      toolbar shown and never triggers a phantom scroll. vh is the fallback for
      browsers without svh — declared first, then overridden. */
   --pad-x: 24px;
-  --gap-section: clamp(20px, 5vh, 42px);
-  --gap-section: clamp(20px, 5svh, 42px);
-  --gap-copy: clamp(16px, 3vh, 24px);
-  --gap-copy: clamp(16px, 3svh, 24px);
+  --pad-top: 24px; /* top → laptop, fixed (safe-area added in .landing) */
+  --pad-bottom: 16px;
+  --gap-section: clamp(14px, 4vh, 34px);
+  --gap-section: clamp(14px, 4svh, 34px);
+  --gap-copy: clamp(14px, 2.6vh, 24px);
+  --gap-copy: clamp(14px, 2.6svh, 24px);
   --gap-benefit: 12px;
-  --pad-top: clamp(20px, 6vh, 51px);
-  --pad-top: clamp(20px, 6svh, 51px);
 
   /* Fluid type/sizes */
   --headline-size: clamp(34px, 11.4vw, 48px);
   --benefit-size: clamp(17px, 5.2vw, 20px);
-  --cta-h: clamp(62px, 11vh, 84px);
-  --cta-h: clamp(62px, 11svh, 84px);
+  --cta-h: clamp(60px, 11vh, 84px);
+  --cta-h: clamp(60px, 11svh, 84px);
   --cta-label: clamp(18px, 5vw, 20px);
   --support-size: 16px;
-  --laptop-max-h: clamp(150px, 30vh, 300px);
-  --laptop-max-h: clamp(150px, 30svh, 300px);
+  --laptop-max-h: clamp(120px, 26vh, 260px);
+  --laptop-max-h: clamp(120px, 26svh, 260px);
 }
 
 /* ----------------------------------------------------------------- reset */
@@ -97,7 +97,7 @@ img {
   text-align: center;
   gap: var(--gap-section);
   padding: calc(var(--pad-top) + env(safe-area-inset-top)) var(--pad-x)
-    calc(var(--gap-section) + env(safe-area-inset-bottom));
+    calc(var(--pad-bottom) + env(safe-area-inset-bottom));
   padding-left: max(var(--pad-x), env(safe-area-inset-left));
   padding-right: max(var(--pad-x), env(safe-area-inset-right));
 }
@@ -268,21 +268,8 @@ img {
   border-radius: 6px;
 }
 
-/* ------------------------------------------------------ short viewports */
-@media (max-height: 700px) {
-  :root {
-    --laptop-max-h: clamp(130px, 24vh, 220px);
-    --gap-section: clamp(14px, 3vh, 26px);
-  }
-}
-@media (max-height: 620px) {
-  :root {
-    --laptop-max-h: clamp(110px, 20vh, 180px);
-    --headline-size: clamp(30px, 9vw, 42px);
-    --gap-copy: 12px;
-  }
-  /* Supporting text may fall below the fold; the CTA must stay visible. */
-}
+/* Vertical sizing is svh-driven (continuous compression), so no height
+   media queries are needed — content fits the small viewport at every size. */
 
 /* ---------------------------------------------------- reduced motion */
 @media (prefers-reduced-motion: reduce) {
