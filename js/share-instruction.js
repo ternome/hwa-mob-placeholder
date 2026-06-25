@@ -6,6 +6,11 @@
 //
 // This module owns the banner's visibility state. main.js drives it around the
 // existing share flow; the share URL / clipboard logic is untouched.
+//
+// Note: the banner is shown by main.js AFTER navigator.share() is invoked, not
+// before. Compositing this card's backdrop-filter layer is expensive on its
+// first paint, and doing that before the share() call breaks iOS Safari's
+// transient-activation window (see main.js onShareTap).
 
 import { EVENTS, track } from './analytics.js';
 import { deviceOs, browserName } from './env.js';
@@ -17,15 +22,9 @@ const banner = document.querySelector('[data-share-instruction]');
 const closeButton = document.querySelector('[data-share-instruction-close]');
 
 let timerId = null; // 20s safety timeout
-let pendingHideId = null; // delayed hide (pointer_cancel)
 let visible = false;
 let shownAt = 0;
 let currentAttempt = 0;
-
-/** Whether the banner is currently shown (one logical "display session"). */
-export function isShareInstructionVisible() {
-  return visible;
-}
 
 /**
  * Show the banner. Idempotent within a display session: a second call while
@@ -33,9 +32,6 @@ export function isShareInstructionVisible() {
  */
 export function showShareInstruction(trigger, attemptNumber) {
   if (!banner || visible) return;
-
-  window.clearTimeout(pendingHideId);
-  pendingHideId = null;
 
   visible = true;
   shownAt = Date.now();
@@ -65,9 +61,7 @@ export function hideShareInstruction(reason) {
   if (!banner || !visible) return;
 
   window.clearTimeout(timerId);
-  window.clearTimeout(pendingHideId);
   timerId = null;
-  pendingHideId = null;
   visible = false;
 
   banner.classList.remove('is-visible');
@@ -81,13 +75,6 @@ export function hideShareInstruction(reason) {
     device_os: deviceOs(),
     browser: browserName(),
   });
-}
-
-/** Hide after a short delay (used when a pointer gesture is cancelled). */
-export function scheduleInstructionHide(reason, delayMs) {
-  if (!visible) return;
-  window.clearTimeout(pendingHideId);
-  pendingHideId = window.setTimeout(() => hideShareInstruction(reason), delayMs);
 }
 
 // --- Dismissal (PLAN §9) ----------------------------------------------------
@@ -104,11 +91,9 @@ closeButton?.addEventListener('click', (event) => {
   hideShareInstruction('user_close_tap');
 });
 
-// Page being destroyed: clear timers, but stay quiet — no noisy analytics on
+// Page being destroyed: clear the timer, but stay quiet — no noisy analytics on
 // teardown (PLAN §16).
 window.addEventListener('pagehide', () => {
   window.clearTimeout(timerId);
-  window.clearTimeout(pendingHideId);
   timerId = null;
-  pendingHideId = null;
 });

@@ -11,8 +11,6 @@ import {
 import {
   showShareInstruction,
   hideShareInstruction,
-  isShareInstructionVisible,
-  scheduleInstructionHide,
 } from './share-instruction.js';
 
 let shareAttempt = 0;
@@ -49,52 +47,46 @@ track(EVENTS.LANDING_VIEW, {
 });
 
 // --- 2. Share action (user-tap initiated only) ------------------------------
-// Show the banner on pointerdown so it can paint BEFORE the native sheet opens
-// (PLAN §7). Only when sharing is actually supported — otherwise no chooser
-// opens and the instruction would mislead (PLAN §11).
-ctaButton?.addEventListener('pointerdown', () => {
-  if (shareInProgress || isShareInstructionVisible()) return;
-  if (!canNativeShare(buildDesktopUrl())) return;
-  showShareInstruction('pointerdown', shareAttempt + 1);
-});
-
-// Gesture abandoned (e.g. scrolled away): no click will follow, so retire the
-// banner shortly after.
-ctaButton?.addEventListener('pointercancel', () => {
-  scheduleInstructionHide('pointer_cancel', 800);
-});
-
 ctaButton?.addEventListener('click', onShareTap);
 
 async function onShareTap() {
   if (shareInProgress) return; // duplicate tap while sharing (PLAN §16)
 
-  shareAttempt += 1;
   const url = buildDesktopUrl();
   const supported = canNativeShare(url);
-
-  track(EVENTS.SHARE_TAP, {
-    source: SOURCE,
-    share_attempt_number: shareAttempt,
-    web_share_supported: supported,
-  });
+  shareAttempt += 1;
 
   if (!supported) {
-    // No banner here (it was never shown when unsupported) — go straight to the
-    // existing clipboard fallback.
+    track(EVENTS.SHARE_TAP, {
+      source: SOURCE,
+      share_attempt_number: shareAttempt,
+      web_share_supported: false,
+    });
+    // No chooser opens, so no banner (PLAN §11) — clipboard fallback only.
     await fallbackCopy(url, 'web_share_unsupported');
     return;
   }
 
-  // Keyboard activation has no pointerdown, so ensure the banner is up before
-  // calling share() within this same user-activation event.
-  if (!isShareInstructionVisible()) {
-    showShareInstruction('click', shareAttempt);
-  }
-
+  // iOS Safari is strict about transient user activation: navigator.share() must
+  // be invoked BEFORE any heavy DOM work in this handler. Showing the banner
+  // first composites a backdrop-filter layer, and on Safari that first paint
+  // pushes share() past the activation window — the call is rejected and only
+  // the *second* tap (layer already warmed) opens the sheet. So invoke share()
+  // first, then show the banner. This drops PLAN §7's pointerdown pre-show: a
+  // valid share() call (§17, criterion 4) outranks the banner's early paint,
+  // which is best-effort anyway (§2, §19).
   shareInProgress = true;
+  const sharePromise = nativeShare({ title: SHARE_TITLE, text: SHARE_TEXT, url });
+
+  showShareInstruction('click', shareAttempt);
+  track(EVENTS.SHARE_TAP, {
+    source: SOURCE,
+    share_attempt_number: shareAttempt,
+    web_share_supported: true,
+  });
+
   try {
-    await nativeShare({ title: SHARE_TITLE, text: SHARE_TEXT, url });
+    await sharePromise;
     // Resolved is only a WEAK proxy — it does not prove the link was sent.
     track(EVENTS.SHARE_RESOLVED, {
       source: SOURCE,
