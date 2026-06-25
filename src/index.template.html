@@ -179,5 +179,63 @@
     </main>
 
     <script type="module" src="js/main.js"></script>
+
+    <!-- ⚠️ DEBUG locale switcher — TEMPORARY, remove this whole block (then
+         rebuild) before release. Jumps between the generated index.<lang>.html
+         pages to eyeball each locale. position:fixed + high z-index so it never
+         affects the page layout. Self-contained: markup + style + script here. -->
+    <div class="dbg-locale">
+      <select class="dbg-locale__select" aria-label="Debug: switch locale"></select>
+    </div>
+    <style>
+      .dbg-locale {
+        position: fixed;
+        top: 8px;
+        left: 8px;
+        z-index: 2000;
+      }
+      .dbg-locale__select {
+        appearance: auto;
+        padding: 6px 8px;
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.35);
+        background: rgba(0, 0, 0, 0.72);
+        color: #fff;
+        font: 600 12px/1 system-ui, sans-serif;
+        -webkit-backdrop-filter: blur(6px);
+        backdrop-filter: blur(6px);
+      }
+    </style>
+    <script>
+      (function () {
+        var LOCALES = [
+          ["en", "EN", "index.html"],
+          ["ru", "RU", "index.ru.html"],
+          ["de", "DE", "index.de.html"],
+          ["fr", "FR", "index.fr.html"],
+          ["es", "ES", "index.es.html"],
+          ["pt", "PT", "index.pt.html"],
+          ["it", "IT", "index.it.html"],
+          ["pl", "PL", "index.pl.html"],
+          ["ja", "JA", "index.ja.html"],
+          ["ko", "KO", "index.ko.html"],
+          ["zh-hans", "ZH-Hans", "index.zh-hans.html"],
+          ["zh-hant", "ZH-Hant", "index.zh-hant.html"]
+        ];
+        var sel = document.querySelector(".dbg-locale__select");
+        if (!sel) return;
+        var cur = location.pathname.split("/").pop() || "index.html";
+        LOCALES.forEach(function (l) {
+          var o = document.createElement("option");
+          o.value = l[2];
+          o.textContent = l[1];
+          if (l[2] === cur) o.selected = true;
+          sel.appendChild(o);
+        });
+        sel.addEventListener("change", function () {
+          location.href = sel.value;
+        });
+      })();
+    </script>
   </body>
 </html>
