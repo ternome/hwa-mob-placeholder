@@ -32,15 +32,40 @@
     <div class="bg" aria-hidden="true"></div>
 
     <main class="landing">
-      <!-- 1. Laptop visual (composite: device + map + logo, baked in Figma). -->
-      <img
-        class="laptop"
-        src="assets/laptop.webp"
-        alt="Hero Wars Alliance running on a laptop"
-        width="820"
-        height="533"
-        fetchpriority="high"
-      />
+      <!-- 1. Laptop visual (Figma composite) with glow FX behind it,
+           ported from hwa-offerhub (token / token__fx / token__glow). -->
+      <div class="hero">
+        <div class="hero__fx" aria-hidden="true">
+          <img class="hero__rays" src="assets/fx-light-rays.webp" alt="" />
+          <img class="hero__spot" src="assets/fx-glow-spot.webp" alt="" />
+          <span class="hero__spark hero__spark--1"></span>
+          <span class="hero__spark hero__spark--2"></span>
+          <span class="hero__spark hero__spark--3"></span>
+          <span class="hero__spark hero__spark--4"></span>
+          <span class="hero__spark hero__spark--5"></span>
+          <span class="hero__spark hero__spark--6"></span>
+        </div>
+        <img
+          class="hero__glow hero__glow--circle"
+          src="assets/glow-circle-blue.webp"
+          alt=""
+          aria-hidden="true"
+        />
+        <img
+          class="hero__glow hero__glow--blue"
+          src="assets/glow-blue.webp"
+          alt=""
+          aria-hidden="true"
+        />
+        <img
+          class="laptop"
+          src="assets/laptop.webp"
+          alt="Hero Wars Alliance running on a laptop"
+          width="820"
+          height="533"
+          fetchpriority="high"
+        />
+      </div>
 
       <!-- 2 + 3. Headline and benefits. -->
       <div class="copy">

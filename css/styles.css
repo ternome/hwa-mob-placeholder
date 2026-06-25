@@ -59,8 +59,9 @@ body {
 }
 
 body {
-  min-height: 100vh;
-  min-height: 100svh;
+  /* No min-height: page height is content-driven so it never exceeds the
+     visible viewport (kills the residual svh-rounding scroll on iOS Chromium).
+     The fixed .bg below covers the viewport regardless of content height. */
   font-family: var(--font-body);
   color: var(--c-text);
   /* Gradient fallback behind the raster background. */
@@ -87,8 +88,6 @@ img {
 .landing {
   position: relative;
   z-index: 1;
-  min-height: 100vh;
-  min-height: 100svh;
   max-width: 430px;
   margin: 0 auto;
   display: flex;
@@ -102,14 +101,110 @@ img {
   padding-right: max(var(--pad-x), env(safe-area-inset-right));
 }
 
-/* ---------------------------------------------------------- laptop visual */
+/* ----------------------------------------------- laptop visual + glow FX */
+/* Glow ported from hwa-offerhub (token / token__fx / token__glow). */
+.hero {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .laptop {
+  position: relative;
+  z-index: 2; /* above the glow + FX layers */
   width: 100%;
   max-width: 382px;
   height: auto;
   aspect-ratio: 1506 / 979; /* reserve space → no layout shift */
   max-height: var(--laptop-max-h);
   object-fit: contain; /* never stretch/crop (PLAN §5) */
+}
+
+/* Static blue bloom behind the laptop. */
+.hero__glow {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  pointer-events: none;
+  mix-blend-mode: screen; /* additive light against the dark bg */
+}
+.hero__glow--circle {
+  width: clamp(360px, 118%, 540px);
+}
+.hero__glow--blue {
+  width: clamp(380px, 126%, 580px);
+  opacity: 0.9;
+}
+
+/* Animated FX: rotating rays + pulsing spot + drifting sparks. */
+.hero__fx {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+.hero__rays,
+.hero__spot {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  transform: translate(-50%, -50%); /* base (static / reduced-motion) */
+  mix-blend-mode: screen;
+  will-change: transform, opacity;
+}
+.hero__rays {
+  width: clamp(300px, 100%, 440px);
+  opacity: 0.32;
+  filter: blur(2px);
+  animation: hero-rays 22s linear infinite;
+}
+.hero__spot {
+  width: clamp(220px, 72%, 340px);
+  opacity: 0.8;
+  animation: hero-spot 3.4s ease-in-out infinite;
+}
+.hero__spark {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 22px;
+  height: 22px;
+  margin: -11px 0 0 -11px;
+  background: url("../assets/fx-spark-blue.webp") center / contain no-repeat;
+  mix-blend-mode: screen;
+  filter: brightness(1.5);
+  opacity: 0;
+  will-change: transform, opacity;
+  animation: hero-spark 4.5s ease-in-out infinite;
+}
+.hero__spark--1 { --x: 132px; --y: -64px; --dx: 8px; --dy: -16px; --s: 1; animation-delay: 0s; }
+.hero__spark--2 { --x: -122px; --y: -42px; --dx: -10px; --dy: -14px; --s: 0.8; animation-delay: 1.1s; }
+.hero__spark--3 { --x: 166px; --y: 24px; --dx: 6px; --dy: -18px; --s: 0.9; animation-delay: 2s; }
+.hero__spark--4 { --x: -142px; --y: 33px; --dx: -6px; --dy: -12px; --s: 0.75; animation-delay: 2.8s; }
+.hero__spark--5 { --x: 70px; --y: -99px; --dx: 10px; --dy: -16px; --s: 0.95; animation-delay: 3.6s; }
+.hero__spark--6 { --x: -44px; --y: -104px; --dx: 0px; --dy: -14px; --s: 1.1; animation-delay: 1.7s; }
+
+@keyframes hero-rays {
+  0% { transform: translate(-50%, -50%) rotate(0deg) scale(0.96); opacity: 0.16; }
+  50% { transform: translate(-50%, -50%) rotate(180deg) scale(1.06); opacity: 0.4; }
+  100% { transform: translate(-50%, -50%) rotate(360deg) scale(0.96); opacity: 0.16; }
+}
+@keyframes hero-spot {
+  0%, 100% { transform: translate(-50%, -50%) scale(0.92); opacity: 0.55; }
+  50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.95; }
+}
+@keyframes hero-spark {
+  0% { transform: translate(var(--x), var(--y)) scale(0.2); opacity: 0; }
+  30% { transform: translate(calc(var(--x) + var(--dx) * 0.3), calc(var(--y) + var(--dy) * 0.3)) scale(var(--s)); opacity: 1; }
+  100% { transform: translate(calc(var(--x) + var(--dx)), calc(var(--y) + var(--dy))) scale(calc(var(--s) * 0.9)); opacity: 0; }
 }
 
 /* ----------------------------------------------------------- copy block */
