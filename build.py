@@ -61,16 +61,15 @@ def read(path):
     return path.read_text(encoding="utf-8")
 
 
-# Every locale (including en) is index.<stem>.html — deliberately NO plain
-# index.html. Vercel serves a physical index.html for "/" BEFORE applying
-# rewrites, which would bypass the Accept-Language routing entirely; with no
-# index.html, "/" falls through to the rewrites in vercel.json.
+# English is the default page at "/" (index.html); other locales are
+# index.<stem>.html. Language routing to the localized files is handled
+# upstream (not via Vercel), so "/" just serves English.
 def out_path(stem):
-    return BASE / f"index.{stem}.html"
+    return BASE / ("index.html" if stem == "en" else f"index.{stem}.html")
 
 
 def url_path(stem):
-    return f"/index.{stem}.html"
+    return "/index.html" if stem == "en" else f"/index.{stem}.html"
 
 
 def validate_locale(stem, data, required_keys):

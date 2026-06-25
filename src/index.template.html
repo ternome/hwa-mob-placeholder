@@ -209,7 +209,7 @@
     <script>
       (function () {
         var LOCALES = [
-          ["en", "EN", "index.en.html"],
+          ["en", "EN", "index.html"],
           ["ru", "RU", "index.ru.html"],
           ["de", "DE", "index.de.html"],
           ["fr", "FR", "index.fr.html"],
@@ -224,7 +224,7 @@
         ];
         var sel = document.querySelector(".dbg-locale__select");
         if (!sel) return;
-        var cur = location.pathname.split("/").pop() || "index.en.html";
+        var cur = location.pathname.split("/").pop() || "index.html";
         LOCALES.forEach(function (l) {
           var o = document.createElement("option");
           o.value = l[2];
